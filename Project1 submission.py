@@ -12,14 +12,15 @@ Problem 1a
  Rewrite the function hsum that takes as input a positive integer n and returns
 the smallest j such that 1 + 1/2 +1/3 +1/5 + · · ·1/j > n.
 """
+
+#Possible fix?
 def Problem1a(n):
-    #n = int(input("Enter a positive integer: "))
     j = 1
     sum = 0
-    while( sum <= n):
-        sum += 1/j
+    while( sum < n):  # was origionally sum <= n
+        sum = sum + 1/j   # was sum += 1/j
         j += 1
-    return j-1
+    return j # was j-1
 """
 Problem 1b
 Write a function Fibonacci that takes as input a positive integer n and returns
