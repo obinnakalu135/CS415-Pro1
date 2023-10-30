@@ -233,7 +233,6 @@ def main():
                 n = int(input("Enter a positive integer: "))
                 k = int(input("Enter an integer k: " ))
                 print(primeGen(n, k))
-
             
             case "4":
                 n = int(input("Enter a positive integer: "))
@@ -246,6 +245,7 @@ def main():
                 D = int(input("Enter the decryption key: "))
                 M = int(input("Enter the message you would like to encode: "))
                 RSA(N, E, D, M)
+
             case "6":
                 print("Goodbye")
 
