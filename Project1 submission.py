@@ -4,12 +4,11 @@ Project 1
 By Obinna Kalu & Jacob Franco
 '''
 
-
 import random
 
 """
 Problem 1a
- Rewrite the function hsum that takes as input a positive integer n and returns
+Rewrite the function hsum that takes as input a positive integer n and returns
 the smallest j such that 1 + 1/2 +1/3 +1/5 + · · ·1/j > n.
 """
 
@@ -46,22 +45,23 @@ if a^N-1 ≡ 1(mod N) and repeats it k times to reduce the probability of error 
 def primality2(n,k):
     if (n == 1):
         return "No"
-    for i in range(2, int(n ** 0.5) + 1):
+    for i in range(2, n): 
         if n % i == 0:
             return "No"
-    for i in range(k):
+
+    for i in range(k):  #Test confidence parameter
         a = random.randint(2, n - 2)
-        if pow(a, n - 1, n) != 1:
+        if pow(a, n - 1, n) != 1:  #tests a^n-1 mod n
             return "No"
     return "Yes"
 
 
 def primality3(n,k):
 
-    if (n%3==0 or n%5==0 or n%7==0 or n%11==0):
-       print("No")
+    if (n % 3 == 0 or n % 5 == 0 or n % 7 == 0 or n % 11 == 0):
+       return ("No")
     else:
-        return print(primality2(n,k))
+        return primality2(n,k)
 
 
 """
@@ -204,9 +204,12 @@ def RSA(N, E, D, M):
     print("This is the decypted message:", decrypted_message)
     print("This is the original message",M)
 
+
+
+
 def main():
     # Get the input from the user asking them what problem they would like solved
-    print("----Questions----\n  1A\t 1B\t 2\t 3\t 4\t 5\t")
+    print("\t----Questions----\n  1A\t 1B\t 2\t 3\t 4\t 5\t 6 (To Quit)\t")
     quest = ""
     # Switch Statement
     while (quest != "6"):
