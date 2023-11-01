@@ -12,7 +12,7 @@ Rewrite the function hsum that takes as input a positive integer n and returns
 the smallest j such that 1 + 1/2 +1/3 +1/5 + · · ·1/j > n.
 """
 
-#Possible fix?
+#Possible fix: Written in the style of HSUM from the paper. 
 def Problem1a(n):
     j = 1
     sum = 0
@@ -20,6 +20,7 @@ def Problem1a(n):
         sum = sum + 1/j   # was sum += 1/j
         j += 1
     return j # was j-1
+
 """
 Problem 1b
 Write a function Fibonacci that takes as input a positive integer n and returns
@@ -45,14 +46,19 @@ if a^N-1 ≡ 1(mod N) and repeats it k times to reduce the probability of error 
 def primality2(n,k):
     if (n == 1):
         return "No"
+
     for i in range(2, n): 
+
         if n % i == 0:
             return "No"
 
     for i in range(k):  #Test confidence parameter
-        a = random.randint(2, n - 2)
+
+        a = random.randint(2, n - 1)  #Set to N-1 to satisfy 1 < a < N, 2 and N-1 are included 
+
         if pow(a, n - 1, n) != 1:  #tests a^n-1 mod n
             return "No"
+
     return "Yes"
 
 
@@ -60,6 +66,7 @@ def primality3(n,k):
 
     if (n % 3 == 0 or n % 5 == 0 or n % 7 == 0 or n % 11 == 0):
        return ("No")
+
     else:
         return primality2(n,k)
 
@@ -196,15 +203,14 @@ the encrypted and the decrypted messages. (If everything works fine, the decrypt
 must be the same as the plain-text M.)
 """
 # (x^e)^d == x mod N
-def RSA(N, E, D, M):
-   
-    encrypted_message = pow(M,E,N)  # message raised to encryption raised to mod
-    decrypted_message = pow(encrypted_message, D, N) #encrypted message raised to the decryption raide to mod
+def RSA(M,N,K):
+    # M is the message to be decoded. 
+    # N is the number needed for problem N,K are used in problem 4.
+    #  N will be used in problem 3 for 2 n-bit primes   Note: This statement may be wrong
+    
+    N,E,D = genKeys(N,K)
 
-    print("This is the decypted message:", decrypted_message)
-    print("This is the original message",M)
-
-
+    print(N, E, D) 
 
 
 def main():
@@ -228,23 +234,22 @@ def main():
                 n = int(input("Enter a integer: "))
                 k = int(input("Enter a confidence perameter: "))
                 print(primality3(n,k))
-
-            case "3":
-                n = int(input("Enter a positive integer: "))
-                k = int(input("Enter an integer k: " ))
-                print(primeGen(n, k))
-            
-            case "4":
-                n = int(input("Enter a positive integer: "))
-                k = int(input("Enter an integer k: " ))
-                print(genKeys(n,k))
-        
-            case "5":
-                N = int(input("Enter the "))
-                E = int(input("Enter the encryption key: "))
-                D = int(input("Enter the decryption key: "))
-                M = int(input("Enter the message you would like to encode: "))
-                RSA(N, E, D, M)
+                """  Not directly tested. Therefore we do not need these match statements. 
+                case "3":
+                    n = int(input("Enter a positive integer: "))
+                    k = int(input("Enter an integer k: " ))
+                    print(primeGen(n, k))
+                
+                case "4":
+                    n = int(input("Enter a positive integer: "))
+                    k = int(input("Enter an integer k: " ))
+                    print(genKeys(n,k))
+                """
+            case "5":       #This input takes inputs M, N, and K
+                m = int(input("Enter the message you would like to encode: "))
+                n = int(input("Enter the integer needed to calculate N: "))
+                k = int(input("Enter the integer needed to calculate K: "))
+                print(RSA(m,n,k))
 
             case "6":
                 print("Goodbye")
