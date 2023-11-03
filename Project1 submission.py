@@ -203,14 +203,18 @@ the encrypted and the decrypted messages. (If everything works fine, the decrypt
 must be the same as the plain-text M.)
 """
 # (x^e)^d == x mod N
-def RSA(M,N,K):
+def RSA(M,N):
     # M is the message to be decoded. 
     # N is the number needed for problem N,K are used in problem 4.
     #  N will be used in problem 3 for 2 n-bit primes   Note: This statement may be wrong
     
-    N,E,D = genKeys(N,K)
+    N,E,D = genKeys(N)
 
     print(N, E, D) 
+
+
+
+
 
 
 def main():
@@ -246,13 +250,28 @@ def main():
                     print(genKeys(n,k))
                 """
             case "5":       #This input takes inputs M, N, and K
-                m = int(input("Enter the message you would like to encode: "))
-                n = int(input("Enter the integer needed to calculate N: "))
-                k = int(input("Enter the integer needed to calculate K: "))
-                print(RSA(m,n,k))
+                m = int(input("Enter the message you would like to encode: ")) #message to encode
+                n = int(input("Enter the integer needed to calculate N: ")) #lengh of prime number p and q
+                print(RSA(m,n)) #encrpytion key is 10 bit number
 
             case "6":
                 print("Goodbye")
 
 if __name__=='__main__':
     main()
+
+
+"""
+    Case 1 and 2 are done. Unless they fail ravi tests.
+
+    Case 5 input needs to be fixed and rethought before calling
+    Need to figure out what probelem to call either 4 or 5
+    What parameters do we take for probelm 5
+        1. Number to encode
+        2. Length (n) for 2 prime numbers
+        
+
+
+
+
+"""
