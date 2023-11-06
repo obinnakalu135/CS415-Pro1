@@ -162,7 +162,7 @@ def gcdExtended(a, b):
     if b == 0:
         return a, 1, 0
     else:
-        gcd, x, y = extended_euclidean_algorithm(b, a % b)
+        gcd, x, y = gcdExtended(b, a % b)
         return gcd, y, x - (a // b) * y
 
 def genKeys(n,k):
@@ -174,22 +174,15 @@ def genKeys(n,k):
     
     N = p*q
     
-    #while (gcd(E, (p-1)*(q-1)) != 1):
-    
-    randomBinInt = generateBinaryString(10)
-    randomDecInt = binaryToDecimal(randomInt)
-    E = randomDecInt
-    
-    if ((gcd(E, (p-1)*(q-1)) != 1)):
-        newRandomBinInt = generateBinaryString(10)
-        newRandomDecInt = binaryToDecimal(randomInt)
-        E = newRandomDecInt
+    while (gcd(E, (p-1)*(q-1)) != 1):
+        randomBinInt = generateBinaryString(10)
+        randomDecInt = binaryToDecimal(randomBinInt)
+        E = randomDecInt
         
     randomBinInt2 = generateBinaryString(10)
-    randomDecInt2 = binaryToDecimal(randomInt)
+    randomDecInt2 = binaryToDecimal(randomBinInt2)
     
-    D = gcdExtended(E,N)
-    
+    _, D, _ = gcdExtended(E, (p-1)*(q-1))
 
     return (N,E,D)
         
@@ -203,25 +196,17 @@ the encrypted and the decrypted messages. (If everything works fine, the decrypt
 must be the same as the plain-text M.)
 """
 # (x^e)^d == x mod N
-def RSA(M,N):
-    # M is the message to be decoded. 
-    # N is the number needed for problem N,K are used in problem 4.
-    #  N will be used in problem 3 for 2 n-bit primes   Note: This statement may be wrong
-    
-    N,E,D = genKeys(N)
-
-    print(N, E, D) 
-
-
-
-
+def RSA(m, key):
+    N, E, D = key
+    enc = pow(m, E, N)
+    dec = pow(enc, D, N)
+    return enc, dec
 
 
 def main():
-    # Get the input from the user asking them what problem they would like solved
     print("\t----Questions----\n  1A\t 1B\t 2\t 3\t 4\t 5\t 6 (To Quit)\t")
     quest = ""
-    # Switch Statement
+
     while (quest != "6"):
         quest = str(input("Enter the problem you would like to answer: "))
 
@@ -235,31 +220,27 @@ def main():
                 print(Fibonacci(n))
 
             case "2":
-                n = int(input("Enter a integer: "))
-                k = int(input("Enter a confidence perameter: "))
+                n = int(input("Enter an integer: "))
+                k = int(input("Enter a confidence parameter: "))
                 print(primality3(n,k))
-                """  Not directly tested. Therefore we do not need these match statements. 
-                case "3":
-                    n = int(input("Enter a positive integer: "))
-                    k = int(input("Enter an integer k: " ))
-                    print(primeGen(n, k))
-                
-                case "4":
-                    n = int(input("Enter a positive integer: "))
-                    k = int(input("Enter an integer k: " ))
-                    print(genKeys(n,k))
-                """
-            case "5":       #This input takes inputs M, N, and K
-                m = int(input("Enter the message you would like to encode: ")) #message to encode
-                n = int(input("Enter the integer needed to calculate N: ")) #lengh of prime number p and q
-                print(RSA(m,n)) #encrpytion key is 10 bit number
+
+            case "5":
+                N = int(input("Enter N: "))
+                E = int(input("Enter E: "))
+                D = int(input("Enter D: "))
+                M = int(input("Enter the plain-text message: "))
+
+                key = (N, E, D)
+                enc, dec = RSA(M, key)
+
+                print("Encrypted message:", enc)
+                print("Decrypted message:", dec)
 
             case "6":
                 print("Goodbye")
 
 if __name__=='__main__':
     main()
-
 
 """
     Case 1 and 2 are done. Unless they fail ravi tests.
