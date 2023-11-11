@@ -193,11 +193,11 @@ Problem 5
 Given integers N, E, D and M where (E , D) form the RSA encyrption and the decryption
 keys, write a function that encrypts the plain-text message M, then decrypts it and prints both
 the encrypted and the decrypted messages. (If everything works fine, the decrypted message
-must be the same as the plain-text M.)
+must be the same as the plain-text M.) N is length of prime #, E is random 10 bit #, D is inverse of E mod p-1 * q-1
 """
 # (x^e)^d == x mod N
 def RSA(m, key):
-    N, E, D = key
+    N, E, D = key 
     enc = pow(m, E, N)
     dec = pow(enc, D, N)
     return enc, dec
